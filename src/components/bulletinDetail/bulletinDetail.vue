@@ -4,6 +4,7 @@
            <div class="bulletin-detail-wrapper clearfix">
                <div class="bulletin-detail-main">
                     <h1 class="name">{{seller.name}}</h1>
+                    <v-star :size="48" :score="seller.score"></v-star>
                </div>
            </div>
            <div class="bulletin-detail-close">
@@ -13,6 +14,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+    import star from '@/components/star/star.vue'
+   
     export default{
        props:{
            detailShow:{
@@ -21,6 +24,9 @@
            seller:{
                 type: Object
            }
+       },
+       components:{
+           "v-star":star
        }
     }
 </script>
