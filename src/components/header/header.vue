@@ -31,7 +31,9 @@
        <div class="background">
            <img :src="seller.avatar" width="100%" height="100%">
        </div>
-       <v-bulletinDetail :detailShow="detailShow" :seller="seller"></v-bulletinDetail>
+         <transition name="slide-fade">
+             <v-bulletinDetail v-show="detailShow" :seller="seller" :classMap="classMap" :hideDetail="hideDetail"></v-bulletinDetail>
+         </transition>
    </div>
 </template>
 
@@ -53,7 +55,10 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
         methods:{
             showDetail(){
                 this.detailShow=true;
-            }
+            },
+           hideDetail(){
+               this.detailShow=false;
+           }            
         }
         ,
         created(){
@@ -183,5 +188,12 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
        height:100%
        z-index :-1
        filter:blur(10px)
+     .slide-fade-enter-active 
+       transition: all .5s ease
+     .slide-fade-leave-active 
+       transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+     .slide-fade-enter, .slide-fade-leave-to
+       transform: translateX(10px);
+       opacity: 0;
 
 </style>
