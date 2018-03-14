@@ -21,7 +21,7 @@ npm run build --report
 
 App 的访问网址为
    www.faryhuo.com
-![Alt text](./readme/ER_chart.png)
+![Alt text](./readme/ER_Chart.png)
 
 
 
