@@ -20,7 +20,7 @@ npm run build --report
 
 
 App 的访问网址为
-   http://119.23.106.55
+   www.faryhuo.com
 ![Alt text](./readme/ERChart.png)
 
 
