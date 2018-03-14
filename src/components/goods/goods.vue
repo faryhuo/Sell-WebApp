@@ -32,11 +32,13 @@
             </li>
         </ul>
     </div>
+    <v-shopcart></v-shopcart>
    </div>
 </template>
 
 <script type="text/ecmascript-6">
    import BScroll from 'better-scroll';
+   import shopcart from  "@/components/shopcart/shopcart.vue";
 
     const ERROR_OK=0;
 
@@ -46,6 +48,10 @@
                 type:Object
             }
         },
+        components:{
+            "v-shopcart":shopcart
+        }
+        ,
         created(){
             this.$http.get('api/goods').then((response)=>{
                 response=response.body;
@@ -84,7 +90,7 @@
                let foodList=this.$refs.foodsWrapper.getElementsByClassName("food-list-hook");
                let element=foodList[index];
                this.foodsScroll.scrollToElement(element,300);
-               console.log(index);
+               
            }
         },
         computed:{
