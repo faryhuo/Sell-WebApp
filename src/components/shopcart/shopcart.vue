@@ -80,8 +80,7 @@
             },
             dropBeforeEnter(el){
                     let count=this.balls.length;
-                    let i=0;
-                    while(i<count){
+                    while(count--){
                         let ball=this.balls[count];
                         if(ball.show){
                             let rect = ball.el.getBoundingClientRect();
@@ -93,13 +92,12 @@
                             let inner = el.getElementsByClassName('inner-hook')[0];
                             inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
                             inner.style.transform = `translate3d(${x}px,0,0)`; 
-                            break;                                                   
                         }
                     }
                 },
                 dropEnter(el,done){
                     /* */
-                    let rf=el.offestHeight;
+                    let rf=el.offsetHeight;
                     this.$nextTick(()=>{
                         el.style.webkitTransform = 'translate3d(0,0,0)';
                         el.style.transform = 'translate3d(0,0,0)';
