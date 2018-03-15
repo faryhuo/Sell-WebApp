@@ -188,10 +188,11 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
        height:100%
        z-index :-1
        filter:blur(10px)
-     .slide-fade-enter-active 
+     .slide-fade-enter-active, .slide-fade-leave-active 
        transition: all .5s ease
-     .slide-fade-enter, .slide-fade-leave-to
+     .slide-fade-enter, .slide-fade-leave-active
        transform: translateX(10px);
        opacity: 0;
+       background :rgba(7,17,27,0)
 
 </style>

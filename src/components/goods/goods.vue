@@ -27,7 +27,7 @@
                                 <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                             </div>
                             <div class="cart-control-wrapper">
-                              <v-cart-control :cart="food"></v-cart-control>    
+                              <v-cart-control @add="_drop" :cart="food"></v-cart-control>    
                             </div>                           
                         </div>
                     </li>
@@ -35,7 +35,7 @@
             </li>
         </ul>
     </div>
-    <v-shopcart :selectedFoods="selectedFoods" :delivery-price="seller.deliveryPrice" 
+    <v-shopcart ref="shopcart" :selectedFoods="selectedFoods" :delivery-price="seller.deliveryPrice" 
     :min-price="seller.minPrice"></v-shopcart>
    </div>
 </template>
@@ -71,6 +71,9 @@
             });
         },
         methods:{
+            _drop(target){
+                this.$refs.shopcart.drop(target);
+            },
            _initScroll(){
                this.menuScroll=new BScroll(this.$refs.menuWrapper,{useTransition:false,click:true});
                this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{probeType:3,useTransition:false,click:true});

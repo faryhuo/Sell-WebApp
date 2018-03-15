@@ -37,6 +37,7 @@
                 }else{
                     this.cart.count++;
                 }
+                this.$emit('add',event.target);
             },
             decreaseCart(event){
                 if(!event._constructed){
@@ -66,18 +67,17 @@
             font-size :24px
             line-height :24px
             color:rgb(0,160,220)
-        &.move
+            transition :all 0.4s linear
+        &.move-enter.active,&.move-leave-active
           opacity :1
           transform :translate3d(0,0,0)
           .inner
-            transition :all 0.4s linear
-            tramsform:rotate(0)
-        &.move-enter,&.move-leave
+             tramsform:rotate(0)
+        &.move-enter,&.move-leave-active
           opacity :0
           transform :translate3d(24px,0,0)
           .inner
-            transform: rotate(180deg)  
-       
+            transform: rotate(180deg)         
       .cart-count
         display :inline-block
         vertical-align :top
