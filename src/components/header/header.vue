@@ -142,7 +142,7 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
           right :12px
           bottom :14px
           padding :0 8px
-          heigh :24px
+          height :24px
           line-height :24px
           border-radius :14px
           background :rgba(0,0,0,0.2)
