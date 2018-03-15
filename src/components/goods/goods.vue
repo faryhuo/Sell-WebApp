@@ -25,6 +25,9 @@
                             <div class="price">
                                 <span class="now">￥{{food.price}}</span>
                                 <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                            </div>
+                            <div class="cart-control-wrapper">
+                              <v-cart-control :cart="food"></v-cart-control>    
                             </div>                           
                         </div>
                     </li>
@@ -32,7 +35,7 @@
             </li>
         </ul>
     </div>
-    <v-shopcart :delivery-price="seller.deliveryPrice" 
+    <v-shopcart :selectedFoods="selectedFoods" :delivery-price="seller.deliveryPrice" 
     :min-price="seller.minPrice"></v-shopcart>
    </div>
 </template>
@@ -40,6 +43,7 @@
 <script type="text/ecmascript-6">
    import BScroll from 'better-scroll';
    import shopcart from  "@/components/shopcart/shopcart.vue";
+   import cartControl from  "@/components/cartControl/cartControl.vue";
 
     const ERROR_OK=0;
 
@@ -50,7 +54,8 @@
             }
         },
         components:{
-            "v-shopcart":shopcart
+            "v-shopcart":shopcart,
+            "v-cart-control":cartControl
         }
         ,
         created(){
@@ -68,7 +73,7 @@
         methods:{
            _initScroll(){
                this.menuScroll=new BScroll(this.$refs.menuWrapper,{useTransition:false,click:true});
-               this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{probeType:3,useTransition:false});
+               this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{probeType:3,useTransition:false,click:true});
 
                this.foodsScroll.on("scroll",(pos)=>{
                    this.scrollY=Math.abs(Math.round(pos.y));
@@ -104,6 +109,17 @@
                     }
                 }
                  return 0;
+            },
+            selectedFoods(){
+                let foods=[];
+                this.goods.forEach((good)=>{
+                    good.foods.forEach((food)=>{
+                        if(food.count){
+                            foods.push(food);
+                        }
+                    });
+                });
+                return foods;
             }
         }
         ,
@@ -225,6 +241,10 @@
              .old
                text-decoration :line-through
                font-size :10px
+            .cart-control-wrapper
+               position :absolute
+               right :0
+               bottom 12px       
 
 
 
