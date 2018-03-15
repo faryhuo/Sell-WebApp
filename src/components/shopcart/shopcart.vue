@@ -79,20 +79,21 @@
                 }
             },
             dropBeforeEnter(el){
-                    console.log("beforeEnter");
                     let count=this.balls.length;
-                    while(count--){
+                    let i=0;
+                    while(i<count){
                         let ball=this.balls[count];
                         if(ball.show){
-                            let rect=ball.el.getBoundingClientRect();
-                            let x=rect.left-32;
-                            let y=-(window.innerHeight-rect.top-22);
-                            el.style.display="";
-                            el.style.webKitTransform=`translate3d(0,${y}px,0)`;
-                            el.style.transform=`translate3d(0,${y}px,0)`;  
-                            let inner=el.getElementsByClassName('inner-hook')[0];
-                            inner.style.webKitTransform=`translate3d(${x}px,0,0)`;
-                            inner.transform=`translate3d(${x}px,0,0)`;                                                      
+                            let rect = ball.el.getBoundingClientRect();
+                            let x = rect.left - 32;
+                            let y = -(window.innerHeight - rect.top - 22);
+                            el.style.display = '';
+                            el.style.webkitTransform = `translate3d(0,${y}px,0)`;
+                            el.style.transform = `translate3d(0,${y}px,0)`;
+                            let inner = el.getElementsByClassName('inner-hook')[0];
+                            inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
+                            inner.style.transform = `translate3d(${x}px,0,0)`; 
+                            break;                                                   
                         }
                     }
                 },
@@ -100,12 +101,11 @@
                     /* */
                     let rf=el.offestHeight;
                     this.$nextTick(()=>{
-                        el.style.display="";
-                        el.style.webKitTransform=`translate3d(0,0,0)`;
-                        el.style.transform=`translate3d(0,0,0)`;  
-                        let inner=el.getElementsByClassName('inner-hook')[0];
-                        inner.style.webKitTransform=`translate3d(0,0,0)`;
-                        inner.transform=`translate3d(0,0,0)`;      
+                        el.style.webkitTransform = 'translate3d(0,0,0)';
+                        el.style.transform = 'translate3d(0,0,0)';
+                        let inner = el.getElementsByClassName('inner-hook')[0];
+                        inner.style.webkitTransform = 'translate3d(0,0,0)';
+                        inner.style.transform = 'translate3d(0,0,0)';
                         el.addEventListener('transitionend',done);                 
                     })
                 },
@@ -175,7 +175,7 @@
                border-radius :50%
                background:rgb(0,160,220)     
              &.drop-enter-active
-               transition :all 0.4s
+               transition :all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
                .inner
                  transition: all 0.4s linear
                   
