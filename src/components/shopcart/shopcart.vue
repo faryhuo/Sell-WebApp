@@ -7,16 +7,34 @@
                       <i class="icon-shopping_cart"></i>
                   </div>
               </div>
-              <div class="price"></div>
-              <div class="desc"></div>
+              <div class="price">￥0</div>
+              <div class="desc">另需配送费{{deliveryPrice}}元</div>
           </div>
-          <div class="content-right"></div>         
+          <div class="content-right">
+              <div class="pay">
+                  ￥{{minPrice}}元起送
+              </div>
+          </div>         
       </div>
    </div>
 </template>
 
 <script type="text/ecmascript-6">
     export default{
+        props:{
+            selectedFoods:{
+                type:Array,
+                default(){
+                    return [];
+                }
+            },
+            delivePrice:{
+                type:Number
+            },
+            minPrice:{
+                type:Number
+            }
+        }
     }
 </script>
 
@@ -30,7 +48,9 @@
        width:100%       
        .content
          display :flex
+         height :48px
          background :#141d27
+         color:rgba(255,255,255,0.4)
          font-size :0px
          .content-left
            flex:1
@@ -39,10 +59,9 @@
              position:relative
              top:-10px
              margin:0 12px
-             padding:6px 6px 3px 6px
-             width:56px
-             height:56px
-             box-sizing :border-box
+             padding:6px
+             width:48px
+             height:48px
              vertical-align :top
              border-radius :50%
              background :#141d27
@@ -69,8 +88,20 @@
              &.highlight
                color: #fff         
            .desc 
-             display :inline-block           
+             display :inline-block   
+             vertical-align :top
+             margin :12px 0 0 12px
+             line-height :24px
+             font-size :10px
          .content-right
            flex:0 0 105px
            width:105px
+           .pay
+             height 48px
+             line-height :48px
+             text-align :center
+             font-size:12px
+             font-weight :700
+             background :#2b333b
+
 </style>
