@@ -1,7 +1,8 @@
 <template>
+  <div>
    <div class="shopcart">
       <div class="content">
-          <div class="content-left">
+          <div class="content-left" @click="toggleList">
               <div class="logo-wrapper">
                   <div class="logo" :class="{highlight:totalCount>0}">
                       <i class="icon-shopping_cart" :class="{highlight:totalCount>0}"></i>
@@ -11,29 +12,59 @@
               <div class="price" :class="{highlight:totalPrice>0}">￥{{totalPrice}}</div>
               <div class="desc">另需配送费{{deliveryPrice}}元</div>
           </div>
-          <div class="content-right">
+          <div class="content-right" @click="pay">
               <div class="pay":class="payClass">
                   {{payDesc}}
               </div>
-          </div>
-          <div class="ball-container">
-                   <div  v-for="ball in balls">
-                        <transition name="drop" @before-enter="dropBeforeEnter" @enter="dropEnter" 
-                        @after-enter="dropAfterEnter">
-                            <div v-show="ball.show" class="ball">
-                                <div class="inner inner-hook">
-
-                                </div>
-                            </div>
-                        </transition>
-                    </div>    
-          </div>         
+          </div>     
       </div>
+           <div class="ball-container">
+                <div  v-for="ball in balls">
+                    <transition name="drop" @before-enter="dropBeforeEnter" @enter="dropEnter" 
+                    @after-enter="dropAfterEnter">
+                        <div v-show="ball.show" class="ball">
+                            <div class="inner inner-hook">
+
+                            </div>
+                        </div>
+                    </transition>
+                </div>    
+          </div>
+          <transition name="fold">
+            <div class="shopcart-list" v-show="listShow">
+                <div class="list-header">
+                    <div class="title">购物车</div>
+                    <div class="empty" @click="empty">清空</div>
+                </div>
+                <div class="list-content" ref="shopcartList">
+                    <ul>
+                        <li class="food" v-for="food in selectedFoods">
+                            <span class="name">{{food.name}}</span>
+                            <div class="price"><span>￥{{food.price*food.count}}</span></div>
+                            <div class="cart-control-wrapper">
+                                <v-cart-control :cart="food"></v-cart-control>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+          </transition>        
    </div>
+   <transition name="fade">
+     <div class="list-mask" @click="hideList" v-show="listShow"></div>
+   </transition>
+  </div> 
 </template>
 
 <script type="text/ecmascript-6">
+   import cartControl from  "@/components/cartControl/cartControl.vue";
+   import BScroll from 'better-scroll';
+
+
     export default{
+        components:{
+            "v-cart-control":cartControl
+        },
         data(){
             return{
                 balls:[{
@@ -47,7 +78,8 @@
                 },{
                     show:false
                 }],
-                dropBall:[]
+                dropBall:[],
+                fold:true
             }
         },
         props:{
@@ -66,6 +98,26 @@
             }
         },
         methods:{
+            pay(){
+                if(this.totalPrice<this.minPrice){
+                    return;
+                }
+                window.alert(`支付${this.totalPrice}`);
+            },
+            hideList(){
+                this.fold=true;
+            },
+            empty(){
+                this.selectedFoods.forEach((food)=>{
+                    food.count=0;
+                });
+            },
+            toggleList(){
+                if(!this.totalCount){
+                   return; 
+                }
+                this.fold=!this.fold;
+            },
             drop(el){
                 console.log("drop");
                 for(let i=0;i<this.balls.length;i++){
@@ -117,6 +169,26 @@
         }
         ,
         computed:{
+            listShow(){
+                if(!this.totalCount){
+                    this.fold=true;
+                    return false;
+                }else{
+                    let show=!this.fold;
+                    if(show){
+                        this.$nextTick(()=>{
+                            if(!this.scroll){
+                                this.scroll=new BScroll(this.$refs.shopcartList,{
+                                    click:true,useTransition:false
+                                });
+                            }else{
+                                this.scroll.refresh();
+                            }
+                        })
+                    }
+                    return show;
+                }
+            },
             totalPrice(){
                 let total=0;
                 this.selectedFoods.forEach((food)=>{
@@ -153,13 +225,66 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    @import "../../common/stylus/mixin.styl"
 
+ 
      .shopcart
        position:fixed
        left:0
        bottom:0
        z-index :50
-       width:100%  
+       width:100%
+       .shopcart-list
+         position :absolute
+         left:0
+         top:0
+         z-index:-1
+         width:100%
+         transition: all 0.5s
+         transform:translate3d(0,-100%,0);        
+         &.fold-enter,&.fold-leave-active
+           transform:translate3d(0,0,0);
+        .list-header
+          height:40px
+          line-height :40px
+          padding:0 18px
+          background :#f3f5f7
+          border-bottom :1px solid rgba(7,17,27,0.1)
+          .title
+            float :left
+            font-size:14px
+            color:rgb(7,17,27)
+          .empty
+            float:right
+            font-size :12px
+            color:rgb(0,160,220)   
+        .list-content
+          padding:0 18px
+          max-height:217px
+          overflow :hidden
+          background :#fff
+          .food
+            position:relative
+            padding:12px 0
+            box-sizing :border-box
+            border-1px(rgba(7,17,27,0.1))
+            .name
+              line-height :24px
+              font-size:14px
+              color:rgb(7,17,27)
+            .price
+              position:absolute
+              right :90px
+              bottom:12px
+              line-height:24px
+              font-size:14px
+              font-weight:700
+              color:rgb(240,20,20)
+            .cart-control-wrapper
+              position :absolute
+              right :0
+              bottom:6px
+                 
        .ball-container
          div
            .ball
@@ -195,6 +320,7 @@
                text-align :center
                border-radius :16px
                font-size :9px
+               line-height :16px
                font-weight :700
                color:#fff
                background :rgb(240,20,20)
@@ -256,6 +382,19 @@
              &.enough
                 background :#00b43c
                 color:#fff
-                
+     .list-mask   
+       position :fixed
+       top:0
+       left:0
+       width:100%
+       height:100%
+       z-index:40
+       opacity :1
+       background :rgba(7,17,27,0.6)
+       backdrop-filter:blur(10)
+       transition : all 0.5s
+       &.fade-enter,fade-leave-active
+         opacity :0
+         background :rgba(7,17,27,0)        
 
 </style>
