@@ -21,6 +21,10 @@ Vue.use(VueResource);
 
 const routes=[
   {
+    path:'',
+    redirect:'/view/goods'
+  },
+  {
     path:'/view/goods',
     component:goods
   },
@@ -45,5 +49,7 @@ let app = new Vue({
   },
   template:'<App/>'
 }).$mount('#app');
+
+
 
 

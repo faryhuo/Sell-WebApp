@@ -1,4 +1,5 @@
 <template>
+<div>
    <div class="goods">
     <div class="menu-wrapper" ref="menuWrapper">
         <ul>
@@ -13,7 +14,7 @@
             <li v-for="item in goods" class="food-list food-list-hook">
                 <h1 class="title">{{item.name}}</h1>
                 <ul>
-                    <li class="food-item border-1px" v-for="food in item.foods">
+                    <li @click="selectFood(food,$event)" class="food-item border-1px" v-for="food in item.foods">
                         <div class="icon"><img :src="food.icon" width="100%" height="100%" alt=""></div>
                         <div class="content">
                             <h2 class="name">{{food.name}}</h2>
@@ -38,12 +39,15 @@
     <v-shopcart ref="shopcart" :selectedFoods="selectedFoods" :delivery-price="seller.deliveryPrice" 
     :min-price="seller.minPrice"></v-shopcart>
    </div>
+    <v-food-detail :food="selectedFood" ref="foodDetail" @add="_drop"></v-food-detail>
+</div>   
 </template>
 
 <script type="text/ecmascript-6">
    import BScroll from 'better-scroll';
    import shopcart from  "@/components/shopcart/shopcart.vue";
    import cartControl from  "@/components/cartControl/cartControl.vue";
+   import foodDetail from  "@/components/foodDetail/foodDetail.vue";
 
     const ERROR_OK=0;
 
@@ -55,7 +59,8 @@
         },
         components:{
             "v-shopcart":shopcart,
-            "v-cart-control":cartControl
+            "v-cart-control":cartControl,
+            "v-food-detail":foodDetail
         }
         ,
         created(){
@@ -71,6 +76,13 @@
             });
         },
         methods:{
+            selectFood(food,$event){
+               if(!$event._constructed){
+                   return;
+               }
+               this.selectedFood=food;
+               this.$refs.foodDetail.show();
+            },
             _drop(target){
                 this.$nextTick(()=>{
                     //体验优化 ， 异步执行下落动画
@@ -140,7 +152,8 @@
                     2:"guarantee",
                     3:"invoice",
                     4:"special"
-                }
+                },
+                selectedFood:null
             }
         }
     }
