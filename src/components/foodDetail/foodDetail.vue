@@ -175,11 +175,12 @@
              position:fixed
              left :0px
              top:0px
-             bottom:58px
+             bottom:48px
              width :100%
              z-index :30
              background :#fff
              transition :all 0.5s linear 
+             padding-bottom :10px
              transform  : translate3d(0,0,0)
              &.move-enter ,&.move-leave-active
                 transform :translate3d(100%,0,0)
