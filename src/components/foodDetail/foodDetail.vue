@@ -17,16 +17,22 @@
                 <div class="price">
                     <span class="now">￥{{food.price}}</span>
                     <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-                </div>              
-          </div>
-          <div class="cartcontrol-wrapper">
-              <v-cart-control :cart="food" @add="add"></v-cart-control>
-          </div>
-          <transition name="fade">
-            <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
-                    加入购物车
+                </div>    
+
+            <div class="cartcontrol-wrapper">
+                <v-cart-control :cart="food" @add="add"></v-cart-control>
             </div>
-          </transition>
+            <transition name="fade">
+                <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
+                        加入购物车
+                </div>
+            </transition>               
+          </div>
+            <v-split  v-show="food.info"></v-split>
+            <div class="info"  v-show="food.info">
+                <h1 class="title">商品信息</h1>
+                <p class="text">{{food.info}}</p>
+            </div>              
       </div>
    </div>
   </transition>
@@ -37,11 +43,13 @@
    import BScroll from 'better-scroll';
    import Vue from 'vue'
    import cartControl from  "@/components/cartControl/cartControl.vue";
+   import split from  "@/components/split/split.vue";
 
 
     export default{
         components:{
-            "v-cart-control":cartControl
+            "v-cart-control":cartControl,
+            "v-split":split
         },
         props:{
             food:{
@@ -124,6 +132,7 @@
                    font-size:20px
                    color:#fff
              .content
+               position :relative
                padding:18px
                .title
                  line-height :14px
@@ -150,6 +159,19 @@
                  .old
                    text-decoration :line-through
                    font-size :10px                
+             .info
+               padding:18px
+               .title
+                 line-height :14px
+                 margin-top:6px
+                 font-size :14px
+                 color:rgb(7,17,27)
+               .text
+                 line-height:24px
+                 padding:0 8px
+                 font-size:12px
+                 font-weight :200
+                 color:rgb(77,85,93)  
              .cartcontrol-wrapper
                position :absolute
                right :12px
