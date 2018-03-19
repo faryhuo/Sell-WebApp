@@ -32,7 +32,28 @@
             <div class="info"  v-show="food.info">
                 <h1 class="title">商品信息</h1>
                 <p class="text">{{food.info}}</p>
-            </div>              
+            </div> 
+            <v-split v-show="food.ratings"></v-split>
+            <div class="rating" v-show="food.ratings">
+                <h1 class="title">商品评价</h1>
+                <v-rating-select @toggleContent="toggleContent" @changeRatingType="changeRatingType" :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></v-rating-select>
+                <div class="rating-wrapper">
+                    <ul v-show="food.ratings && food.ratings.length">
+                        <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings" class="rating-item border-1px">
+                            <div class="user">
+                                <span class="username">{{rating.username}}</span>
+                                <img :src="rating.avatar" alt="" height="12" width="12" class="avatar">
+                            </div>
+                            <div class="time">{{rating.rateTime | formatDate}}</div>
+                            <p class="text">
+                                <span :class="{'icon-thumb_up':rating.rateType===0,
+                                'icon-thumb_down':rating.rateType===1}"></span>{{rating.text}}
+                            </p>
+                        </li> 
+                    </ul>
+                    <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
+                </div>
+            </div>                     
       </div>
    </div>
   </transition>
@@ -44,25 +65,74 @@
    import Vue from 'vue'
    import cartControl from  "@/components/cartControl/cartControl.vue";
    import split from  "@/components/split/split.vue";
+   import ratingselect from  "@/components/ratingselect/ratingselect.vue";
+   import * as DateOperator from '@/common/js/date.js';
 
+    const POSITIVE=0;
+    const NEGATIVE=1;
+    const ALL=2;
 
     export default{
         components:{
             "v-cart-control":cartControl,
-            "v-split":split
+            "v-split":split,
+            "v-rating-select":ratingselect
         },
         props:{
             food:{
                 type:Object
             }
         },
+        filters:{
+            formatDate(time){
+                let date=new Date(time);
+                return DateOperator.formatDate(date,'yyyy/MM/dd hh:mm');
+            }
+        }
+        ,
         data(){
            return{
-               showFlag:false
+               showFlag:false,
+               selectType:ALL,
+               onlyContent:true,
+               desc:{
+                   all:'全部',
+                   positive:'推荐',
+                   negative:'吐槽'
+               }
            }
         },
         computed:{
         },methods:{
+            changeRatingType(type){
+                this.selectType=type;
+                this.$nextTick(()=>{
+                   if(this.scroll){
+                    this.scroll.refresh();
+                   }
+                });
+            },
+            toggleContent(onlyContent){
+                this.onlyContent=onlyContent;
+                this.$nextTick(()=>{
+                   if(this.scroll){
+                    this.scroll.refresh();
+                   }
+                });              
+            },
+            needShow(rateType,text){
+                if(this.onlyContent && !text){
+                    return false;
+                }
+                if(this.selectType===ALL){
+                    return true;
+                }
+                if(rateType===this.selectType){
+                    return true;
+                }else{
+                    return false;
+                }
+            },
             add(target){
                this.$emit("add",target);
             },
@@ -77,6 +147,8 @@
                     }
                 });
                 this.showFlag=true;
+                this.selectType=ALL,
+                this.onlyContent=true;
             },hide(){
                 this.showFlag=false;
             },
@@ -96,15 +168,15 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
- 
+      @import "../../common/stylus/mixin.styl"
+
 
            .foodDetail
              position:fixed
              left :0px
              top:0px
-             bottom:48px
+             bottom:58px
              width :100%
-             height :100%
              z-index :30
              background :#fff
              transition :all 0.5s linear 
@@ -172,6 +244,53 @@
                  font-size:12px
                  font-weight :200
                  color:rgb(77,85,93)  
+             .rating                 
+               padding-top:18px
+               .rating-wrapper
+                 padding: 0 18px
+                 .no-rating
+                   padding:16px 0
+                   font-size:12px
+                   color:rgb(147,153,159) 
+                 .rating-item
+                   position :relative
+                   padding :16px 0
+                   border-1px(rgba(7,17,27,0.1))
+                   .user
+                      position :absolute
+                      right :0px
+                      top: 16px
+                      line-height :12px
+                      font-size :0
+                      .username
+                        display :inline-block
+                        margin-right: 6px
+                        vertical-align :top
+                        font-size:10px
+                        color:rgb(147,153,159)
+                      .avatar
+                        border-radius :50%
+                    .time
+                      line-height :12px
+                      font-size :10px
+                      color:rgb(147,153,159)
+                    .text
+                      line-height :16px
+                      font-size :12px
+                      color:rgb(7,17,27)   
+                    .icon-thumb_up,.icon-thumb_down
+                      margin-right :4px
+                      line-height :16px
+                      font-size :12px
+                    .icon-thumb_up
+                      color:rgb(0,160,220)
+                    .icon-thumb_down   
+                      color:rgb(147,153,159)
+               .title
+                 line-height :14px
+                 margin-left:18px
+                 font-size :14px
+                 color:rgb(7,17,27)                 
              .cartcontrol-wrapper
                position :absolute
                right :12px
