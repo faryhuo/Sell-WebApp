@@ -68,11 +68,11 @@ export default{
           bg-image('./img/star48_half')
         &.off  
           bg-image('./img/star48_off')
-      &.star-32
+      &.star-36
        .star-item
         width:15px
         height:15px
-        margin-right :16px
+        margin-right :6px
         background-size:15px 15px
         &:last-child
           margin-right :0
