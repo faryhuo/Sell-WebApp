@@ -11,20 +11,26 @@
 <script>
   import header from './components/header/header.vue';
   import tab from './components/tab/tab.vue';
+  import * as utils from '@/common/js/utils.js';
 
   const ERR_OK= 0;
 
   export default{
         data() {
             return {
-                seller:{}
+                seller:{
+                    id:(()=>{
+                      let queryParam=utils.urlParse();
+                      return queryParam.id;
+                    })()
+                }
             }
         },
         created() {
-            this.$http.get('/api/seller').then((response) => {
+            this.$http.get('/api/seller?id='+this.seller.id).then((response) => {
                 response=response.body;
                 if (response.errno===ERR_OK){
-                   this.seller=response.data;
+                   this.seller=Object.assign({},this.seller,response.data);
                    console.log(this.seller);
                 }
             });

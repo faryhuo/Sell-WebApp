@@ -28,22 +28,47 @@
                         </div>
                     </li>   
                </ul>
+               <div class="favorite" @click="toggleFavorite">
+                   <i class="icon-favorite" :class="{'active':favorite}"></i>
+                   <span class="text">{{favoriteText}}</span>
+               </div>
            </div>
            <v-split></v-split>
            <div class="bulletin">
                <h1 class="title">公告</h1>
                <div class="content-wrapper border-1px">
                    <p class="content">{{seller.bulletin}}</p>
-
                </div>
+                <ul v-if="seller.supports" class="supports">
+                    <li class="support-item border-1px" v-for="item in seller.supports">
+                        <span class="icon" :class="classMap[item.type]"></span>
+                        <span class="text">{{item.description}}</span>
+                    </li>
+                </ul>                
            </div>
-            <ul v-if="seller.supports" class="supports">
-                <li class="support-item border-1px" v-for="item in seller.supports">
-                    <span class="icon" :class="classMap[item.type]"></span>
-                    <span class="text">{{item.description}}</span>
-                </li>
-          </ul>          
+ 
+          <v-split></v-split>
+          <div class="pics">
+              <h1 class="title">商家实景</h1>
+              <div class="pic-wrapper" ref="picWrapper">
+                  <ul class="pic-list" ref="picList">
+                      <li class="pic-item" v-for="pic in seller.pics">
+                          <img :src="pic" width="120" height="90" alt="">
+                      </li>
+                  </ul>
+              </div>
+          </div>  
+          <v-split></v-split  v-show="seller.infos">
+          <div class="info" v-show="seller.infos">
+              <h1 class="title">商家信息</h1>
+              <ul>
+                  <li class="info-item" v-for="info in seller.infos">
+                      {{info}}
+                  </li>
+              </ul>
+          </div>
        </div>
+
    </div>
 </template>
 
@@ -63,26 +88,56 @@
         mounted(){
             console.log("mounted");
             this._initScroll();
+            this._initPicScroll();
         }
         ,
         watch:{
            'seller'(){
                this._initScroll();
+               this._initPicScroll();
            } 
         }
         ,
         methods:{
+            _initPicScroll(){
+                if(this.seller.pics){
+                    let picWidth=120;
+                    let margin=6;
+                    let width=(picWidth+margin)*this.seller.pics.length-margin;
+                    this.$refs.picList.style.width=width+"px";
+                    this.$nextTick(()=>{
+                        if(!this.picScroll){
+                                this.picScroll=new BScroll(this.$refs.picWrapper,{
+                                    useTransition:false,scrollX:true,
+                                eventPassthrough:'vertical'});
+                        }else{
+                            this.picScroll.refresh();
+                        }                    
+                    });
+                }
+            },
             _initScroll(){
                if(!this.scroll){
                     this.scroll=new BScroll(this.$refs.seller,{useTransition:false,click:true});
                }else{
                    this.scroll.refresh();
                }
-            },
+            },toggleFavorite(event){
+                if(!event._constructed){
+                    return false;
+                }
+                this.favorite=!this.favorite;
+            }
+        },
+        computed:{
+            favoriteText(){
+                return this.favorite?"已收藏":"收藏";
+            }
         }
         ,
         data(){
             return {
+                favorite:false,
                 classMap:{
                     0:"decrease",
                     1:"discount",
@@ -154,6 +209,24 @@
               color:rgb(7,17,27)
               .stress
                 font-size:24px
+        .favorite
+          position :absolute
+          right :11px
+          top:18px
+          width:50px
+          text-align :center
+          .icon-favorite
+            display :block
+            margin-bottom:4px
+            line-height :24px
+            font-size:24px
+            color:#d4d6d9
+            &.active
+              color:rgb(240,20,20)
+          .text
+            line-height :10px
+            font-size:10px
+            color:rgb(77,85,93)    
       .bulletin
         padding:18px 18px 0 18px
         .title
@@ -197,9 +270,43 @@
              line-height :16px
              font-size :12px
              color:rgb(7,17,27)
+      .pics
+        padding:18px
+        .title
+          margin-bottom :12px
+          line-height :14px
+          color:rgb(7,17,27)
+          font-size:14px  
+        .pic-wrapper
+          width :100%
+          overflow :hidden
+          white-space:nowrap
+          .pic-list
+            font-size:0px
+            .pic-item
+              display: inline-block
+              margin-right :6px
+              width:120px
+              height :90px
+              &:last-child
+                margin:0        
+      .info
+        padding:18px 18px 0 18px
+        .title
+          padding-bottom: 12px
+          line-height :14px
+          border-1px(rgba(7,17,27,0.1))
+          color:rgb(7,17,27)
+          font-size:14px
+        .info-item
+          padding:16px 12px
+          line-height :16px
+          border-1px(rgba(7,17,27,0.1))  
+          color:rgb(7,17,27)
+          font-size :12px
+          &:last-child
+            border-none()
 
-
-          
         
 
 </style>
