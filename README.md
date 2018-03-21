@@ -17,10 +17,20 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+该Application是用Vue2.5.2 进行开发的一个外卖Moblie Web App.
+1.项目用的css 编译语音是stylus.
+2.项目的基本结构由Vue-Cli 进行初始化。
+3.项目用到的构建工具是Webpack 3.6
+4.项目是使用ES6 进行开发。用到的js licence 有 better-scroll,Vue,Vue-Router,Vue-Resource.
 
 
+该项目已经部署到互联网上
+可以通过以下的URL 去访问获取使用手机去扫下面的二维码进行访问。
 App 的访问网址为
+
    www.faryhuo.com
+
+
 ![Alt text](./readme/ER_Chart_1.png)
 
 
