@@ -16,7 +16,8 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-```
+
+
 该Application是用Vue2.5.2 进行开发的一个外卖Moblie Web App.
 1.项目用的css 编译语音是stylus.
 2.项目的基本结构由Vue-Cli 进行初始化。
@@ -32,6 +33,7 @@ App 的访问网址为
 
 
 ![Alt text](./readme/ER_Chart_1.png)
+```
 
 
 
