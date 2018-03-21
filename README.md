@@ -19,7 +19,7 @@ npm run build --report
 
 
 该Application是用Vue2.5.2 进行开发的一个外卖Moblie Web App.
-1.项目用的css 编译语音是stylus.
+1.项目用的css 预处理器是stylus.
 2.项目的基本结构由Vue-Cli 进行初始化。
 3.项目用到的构建工具是Webpack 3.6
 4.项目是使用ES6 进行开发。用到的js licence 有 better-scroll,Vue,Vue-Router,Vue-Resource.

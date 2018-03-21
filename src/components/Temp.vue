@@ -1,11 +1,11 @@
 <template>
-   <div class="goods">
-       I am goods;
+   <div class="Temp">
+       Temp;
    </div>
 </template>
 
 <script type="text/ecmascript-6">
-    export {
+    export default{
     }
 </script>
 
