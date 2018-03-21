@@ -1,4 +1,4 @@
-# webapp
+# Sell-Webapp
 
 > A Vue.js project
 
@@ -19,6 +19,9 @@ npm run build --report
 
 
 该Application是用Vue2.5.2 进行开发的一个外卖Moblie Web App.
+
+项目目前只有font-end部分。项目请求的数据来源是data.json.
+
 1.项目用的css 预处理器是stylus.
 2.项目的基本结构由Vue-Cli 进行初始化。
 3.项目用到的构建工具是Webpack 3.6
