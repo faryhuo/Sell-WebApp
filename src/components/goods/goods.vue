@@ -49,7 +49,8 @@
    import cartControl from  "@/components/cartControl/cartControl.vue";
    import foodDetail from  "@/components/foodDetail/foodDetail.vue";
 
-    const ERROR_OK=0;
+   import {ResponseCode} from '@/common/js/constant.js';
+
 
     export default{
         props:{
@@ -66,7 +67,7 @@
         created(){
             this.$http.get('api/goods').then((response)=>{
                 response=response.body;
-                if(response.errno==ERROR_OK){
+                if(response.errno==ResponseCode.OK){
                     this.goods=response.data;
                     this.$nextTick(()=>{
                         this._initScroll();

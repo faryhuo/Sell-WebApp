@@ -14,8 +14,7 @@
   import header from './components/header/header.vue';
   import tab from './components/tab/tab.vue';
   import * as utils from '@/common/js/utils.js';
-
-  const ERR_OK= 0;
+  import {ResponseCode} from '@/common/js/constant.js';
 
   export default{
         data() {
@@ -29,9 +28,9 @@
             }
         },
         created() {
-            this.$http.get('/api/seller?id='+this.seller.id).then((response) => {
+            this.$http.get('http://localhost:8080/Seller/getSellerById.do?id='+this.seller.id).then((response) => {
                 response=response.body;
-                if (response.errno===ERR_OK){
+                if (response.status===ResponseCode.OK){
                    this.seller=Object.assign({},this.seller,response.data);
                    console.log(this.seller);
                 }

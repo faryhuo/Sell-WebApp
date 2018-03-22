@@ -60,11 +60,8 @@
    import BScroll from 'better-scroll';
    import * as DateOperator from '@/common/js/date.js';
 
-    const POSITIVE=0;
-    const NEGATIVE=1;
-    const ALL=2;
+   import {RatingType,ResponseCode} from '@/common/js/constant.js';
 
-    const ERR_OK=0;
 
     export default{
         components:{
@@ -80,7 +77,7 @@
         created(){
             this.$http.get('/api/ratings').then((response)=>{
                response=response.body;
-               if(response.errno===ERR_OK){
+               if(response.errno===ResponseCode.OK){
                    this.ratings=response.data;
                    this.$nextTick(()=>{
                         this._initScroll();
@@ -104,7 +101,7 @@
                 if(this.onlyContent && !text){
                     return false;
                 }
-                if(this.selectType===ALL){
+                if(this.selectType===RatingType.ALL){
                     return true;
                 }
                 if(rateType===this.selectType){
@@ -134,7 +131,7 @@
         data(){
             return {
                showFlag:false,
-               selectType:ALL,
+               selectType:RatingType.ALL,
                onlyContent:true,
                ratings:[]        
             }

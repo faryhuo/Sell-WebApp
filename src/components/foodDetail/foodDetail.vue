@@ -68,9 +68,7 @@
    import ratingselect from  "@/components/ratingselect/ratingselect.vue";
    import * as DateOperator from '@/common/js/date.js';
 
-    const POSITIVE=0;
-    const NEGATIVE=1;
-    const ALL=2;
+  import {RatingType} from '@/common/js/constant.js';
 
     export default{
         components:{
@@ -93,7 +91,7 @@
         data(){
            return{
                showFlag:false,
-               selectType:ALL,
+               selectType:RatingType.ALL,
                onlyContent:true,
                desc:{
                    all:'全部',
@@ -124,7 +122,7 @@
                 if(this.onlyContent && !text){
                     return false;
                 }
-                if(this.selectType===ALL){
+                if(this.selectType===RatingType.ALL){
                     return true;
                 }
                 if(rateType===this.selectType){
@@ -147,7 +145,7 @@
                     }
                 });
                 this.showFlag=true;
-                this.selectType=ALL,
+                this.selectType=RatingType.ALL,
                 this.onlyContent=true;
             },hide(){
                 this.showFlag=false;

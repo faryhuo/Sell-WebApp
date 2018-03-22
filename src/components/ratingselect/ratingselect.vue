@@ -13,10 +13,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-    const POSITIVE=0;
-    const NEGATIVE=1;
-    const ALL=2;
-    
+
+    import {RatingType} from '@/common/js/constant.js';
+  
     export default{
         data(){
             return {
@@ -26,12 +25,12 @@
         computed:{
             positives(){
                 return this.ratings.filter((rating)=>{
-                   return rating.rateType===POSITIVE;
+                   return rating.rateType===RatingType.POSITIVE;
                 });
             },
             negatives(){
                 return this.ratings.filter((rating)=>{
-                   return rating.rateType===NEGATIVE;
+                   return rating.rateType===RatingType.NEGATIVE;
                 });
             }
         }
@@ -61,7 +60,7 @@
             },
             selectType:{
                 type:Number,
-                default:ALL
+                default:RatingType.ALL
             },
             onlyContent:{
                 type:Boolean,
