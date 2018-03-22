@@ -1,0 +1,9 @@
+let str=""; 
+for(var i=0;i<foods.length;i++){
+  let food=foods[i];
+  str+=`insert into FOODS(name, price, oldPrice, description, sellCount, rating, info, icon, image,goodsId) 
+         VALUE('${food.name}',${food.price?food.price:null},${food.oldPrice?food.oldPrice:null},'${food.description}'
+         ,${food.sellCount?food.sellCount:null},${food.rating?food.rating:null},'${food.info}','${food.icon}','${food.image}'
+         ,1); `;
+}
+console.log(str);

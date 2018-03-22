@@ -49,7 +49,7 @@
    import cartControl from  "@/components/cartControl/cartControl.vue";
    import foodDetail from  "@/components/foodDetail/foodDetail.vue";
 
-   import {ResponseCode} from '@/common/js/constant.js';
+   import {ResponseCode,Api} from '@/common/js/constant.js';
 
 
     export default{
@@ -65,9 +65,10 @@
         }
         ,
         created(){
-            this.$http.get('api/goods').then((response)=>{
+            this.$http.get(Api.getGoods(this.seller.id)).then((response)=>{
                 response=response.body;
-                if(response.errno==ResponseCode.OK){
+                if(response.status===ResponseCode.OK){
+                    console.log(response);
                     this.goods=response.data;
                     this.$nextTick(()=>{
                         this._initScroll();
