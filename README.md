@@ -20,6 +20,13 @@ npm run build --report
 
 该Application是用Vue2.5.2 进行开发的一个外卖Moblie Web App.
 
+项目的表现和数据分离
+    数据的来源是通过请求Restful Api 去获取。
+    Api 的地址是 www.faryhuo.com:8080.
+    RestApi 是采用Java编程语言去实现。
+    采用了Spring, Spring Mvc ,Mybatis 等框架 
+    项目的GitHub地址是
+    https://github.com/faryhuo/sellapi
 
 1.项目用的css 预处理器是stylus.
 2.项目的基本结构由Vue-Cli 进行初始化。
