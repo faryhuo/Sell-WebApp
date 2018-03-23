@@ -10,8 +10,10 @@ const RatingType={
 
 const host="localhost";
 const port="8080"
-const isSimlatorMode=true;
- let Api={
+const isSimlatorMode=false;
+
+
+let Api={
    getSeller(sellerId){
      if(isSimlatorMode){
        return "/api/seller";
@@ -22,7 +24,13 @@ const isSimlatorMode=true;
     if(isSimlatorMode){
       return "/api/goods";
     }    
-    return `http://${host}:${port}/api/goods/${sellerId}`;
+    return `http://${host}:${port}/api/Seller/Goods/${sellerId}`;
+  },
+  getRatings(sellerId){
+    if(isSimlatorMode){
+      return "/api/ratings";
+    }    
+    return `http://${host}:${port}/api/Seller/Rating/${sellerId}`;
   }
  } 
 

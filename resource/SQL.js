@@ -7,3 +7,13 @@ for(var i=0;i<foods.length;i++){
          ,1); `;
 }
 console.log(str);
+
+
+let str4=""; 
+for(var i=0;i<ratings.length;i++){
+  let rating=ratings[i];
+  str4+=`insert into RATINGS(username, rateTime, rateType, text, avatar, categoryId,categoryType)
+            VALUE ('${rating.username}','${rating.rateTime?formatDate(new Date(rating.rateTime),"yyyy-MM-dd hh:mm:ss"):""}',
+            ${rating.rateType?rating.rateType:null},'${rating.text}','${rating.avatar}',1,0);`
+}
+console.log(str4);

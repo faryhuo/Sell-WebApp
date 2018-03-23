@@ -60,7 +60,7 @@
    import BScroll from 'better-scroll';
    import * as DateOperator from '@/common/js/date.js';
 
-   import {RatingType,ResponseCode} from '@/common/js/constant.js';
+   import {RatingType,ResponseCode,Api} from '@/common/js/constant.js';
 
 
     export default{
@@ -75,9 +75,9 @@
             }
         },
         created(){
-            this.$http.get('/api/ratings').then((response)=>{
+            this.$http.get(Api.getRatings(this.seller.id)).then((response)=>{
                response=response.body;
-               if(response.errno===ResponseCode.OK){
+               if(response.status===ResponseCode.OK){
                    this.ratings=response.data;
                    this.$nextTick(()=>{
                         this._initScroll();
