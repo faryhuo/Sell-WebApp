@@ -1,5 +1,5 @@
 <template>
-   <div class="header">
+   <div class="SellerHeader">
        <div class="content-wrapper">
            <div class="avatar">
                <img :src="seller.avatar" width="64" height="64" alt="">
@@ -78,7 +78,7 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
 
 <style lang="stylus" rel="stylesheet/stylus">
     @import "../../common/stylus/mixin.styl"
-   .header
+   .SellerHeader
      position :relative
      overflow :hidden
      color:#fff

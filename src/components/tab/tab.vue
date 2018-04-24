@@ -1,19 +1,24 @@
 <template>
    <div class="tab border-1px">
        <div class="tab-item">
-           <router-link to="/view/goods">商品</router-link>
+           <router-link :to="{path:'/detail/'+id+'/goods'}" >商品</router-link>
        </div>
        <div class="tab-item">
-           <router-link to="/view/ratings">评论</router-link>
+           <router-link :to="{path:'/detail/'+id+'/ratings'}" >评论</router-link>
        </div>
        <div class="tab-item">
-            <router-link to="/view/seller">商家</router-link>
+            <router-link :to="{path:'/detail/'+id+'/seller'}" >商家</router-link>
        </div>
    </div>
 </template>
 
 <script type="text/ecmascript-6">
     export default{
+        props:{
+            id:{
+                type:String
+            }
+        }
     }
 </script>
 

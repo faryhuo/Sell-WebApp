@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div>
       <v-header :seller="seller"></v-header>
-      <v-tab></v-tab>
+      <v-tab :id="seller.id"></v-tab>
       <div class="content">
         <keep-alive>
             <router-view :seller="seller"></router-view>
@@ -21,9 +21,14 @@
             return {
                 seller:{
                     id:(()=>{
+                      let id=this.$route.params.id;
+                      console.log(id);
+                      return id;
+                    })()
+                    /*(()=>{
                       let queryParam=utils.urlParse();
                       return queryParam.id;
-                    })()
+                    })()*/
                 }
             }
         },

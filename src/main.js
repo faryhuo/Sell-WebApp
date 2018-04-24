@@ -7,8 +7,10 @@ import VueResource from 'vue-resource'
 import goods from './components/goods/goods.vue'
 import ratings from './components/ratings/ratings.vue'
 import seller from './components/seller/seller.vue'
+import SellerList from './components/SellerList/SellerList.vue'
 
 //stylus
+import "../node_modules/ionicons/dist/css/ionicons.css";
 import "./common/stylus/index.styl";
 
 
@@ -21,20 +23,26 @@ Vue.use(VueResource);
 
 const routes=[
   {
+    path:'/detail/:id',
+    component:App,
+    children:[
+      {
+        path:'goods',
+        component:goods
+      },
+      {
+        path:'ratings',
+        component:ratings
+      },
+      {
+        path:'seller',
+        component:seller
+      }
+    ]
+  },
+  {
     path:'',
-    redirect:'/view/goods'
-  },
-  {
-    path:'/view/goods',
-    component:goods
-  },
-  {
-    path:'/view/ratings',
-    component:ratings
-  },
-  {
-    path:'/view/seller',
-    component:seller
+    component:SellerList
   }
 ]
 const router = new VueRouter({
@@ -45,9 +53,8 @@ const router = new VueRouter({
 let app = new Vue({
   router,
   components:{
-    App
   },
-  template:'<App/>'
+  template:'<div  id="app"><router-view></router-view></div>'
 }).$mount('#app');
 
 

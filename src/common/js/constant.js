@@ -10,7 +10,7 @@ const RatingType={
 
 const host="localhost";
 const port="8080"
-const isSimlatorMode=false;
+const isSimlatorMode=true;
 
 
 let Api={
