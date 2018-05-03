@@ -1,5 +1,8 @@
 <template>
    <div class="SellerHeader">
+       <div class="back-btn" @click="backMainPage">
+           <i class="material-icons">chevron_left</i>
+       </div>
        <div class="content-wrapper">
            <div class="avatar">
                <img :src="seller.avatar" width="64" height="64" alt="">
@@ -58,7 +61,10 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
             },
            hideDetail(){
                this.detailShow=false;
-           }            
+           },
+           backMainPage(){
+               this.$router.push({path:"/"});
+           }       
         }
         ,
         created(){
@@ -83,6 +89,16 @@ import bulletinDetail from "@/components/bulletinDetail/bulletinDetail.vue";
      overflow :hidden
      color:#fff
      background :rgba(7,17,27,0.5)
+     .back-btn
+       position :absolute
+       top:1px
+       left 1px
+       width:16px
+       height :16px
+       z-index :20
+       .material-icons
+         width:16px
+         height :16px         
      .content-wrapper
        position :relative
        padding :24px 12px 18px 24px

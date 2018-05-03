@@ -7,7 +7,9 @@ import VueResource from 'vue-resource'
 import goods from './components/goods/goods.vue'
 import ratings from './components/ratings/ratings.vue'
 import seller from './components/seller/seller.vue'
-import SellerList from './components/SellerList/SellerList.vue'
+import homePage from './components/homePage/homePage.vue'
+import sellerList from './components/sellerList/sellerList.vue'
+import userInfo from './components/userInfo/userInfo.vue'
 
 //stylus
 import "../node_modules/ionicons/dist/css/ionicons.css";
@@ -42,7 +44,17 @@ const routes=[
   },
   {
     path:'',
-    component:SellerList
+    component:homePage,
+    children:[{
+      path:'',
+      component:sellerList
+    },{
+      path:'/order',
+      component:sellerList
+    },{
+      path:'/user',
+      component:userInfo
+    }]
   }
 ]
 const router = new VueRouter({

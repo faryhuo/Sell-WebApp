@@ -31,7 +31,12 @@ let Api={
       return "/api/ratings";
     }    
     return `http://${host}:${port}/api/Seller/Rating/${sellerId}`;
-  }
+  },
+  getSellerList(){
+    if(isSimlatorMode){
+      return "/api/sellerList";
+    }    
+    return `http://${host}:${port}/api/Seller/Rating/${sellerId}`;  }
  } 
 
 export  {ResponseCode,RatingType,Api};

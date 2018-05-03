@@ -3,7 +3,7 @@
        <div class="options-wrapper">
             <div class="left-content">
                 <div class="image">
-                    <img src="./IMG_0304.png" width="100%" height="100%"></img>
+                    <img :src="Seller.icon" width="100%" height="100%"></img>
                 </div>
             </div>
             <div class="right-content">
@@ -59,7 +59,10 @@
             }
         },
         methods:{
-            viewDetail(){
+            viewDetail($event){
+                if(!$event._constructed){
+                   return;
+                }
                 let id=this.Seller.id;
                 this.$router.push({path:`/detail/${id}/goods`});
             }

@@ -1,5 +1,5 @@
 <template>
-   <div class="SellerList">
+   <div class="sellerList">
        <header class="header">
          <h1 class="title">
            外卖APP
@@ -9,7 +9,7 @@
             <div class="icon">
               <i class="material-icons">place</i>
             </div>
-            <div class="text">滨海写字楼</div>
+            <div class="text">{{position}}</div>
             <div class="icon">
               <i class="material-icons">keyboard_arrow_right</i>
             </div>
@@ -21,102 +21,87 @@
             <div class="text"></div>
           </div>
         </div>
-        <div class="menu-list">
-          <ul>
-            <li class="menu-item">
-              <div class="icon" style="background:#e97874">
-                <i class="material-icons">room_service</i>
-              </div>
-              <div class="text">美食</div>
-            </li>
-            <li class="menu-item">
-              <div class="icon" style="background:#a1c1f9">
-                 <i class="material-icons">shopping_cart</i>
-              </div>
-              <div class="text" >美团超市</div>
-            </li>
-            <li class="menu-item">
-              <div class="icon" style="background:#a9dc6a">
-                <i class="material-icons">spa</i>
-              </div>
-              <div class="text">生鲜果蔬</div>
-            </li>
-            <li class="menu-item">
-              <div class="icon"  style="background:#f3b25c">
-                <i class="material-icons">free_breakfast</i>
-              </div>
-              <div class="text">下午茶</div>
-            </li>
-          </ul>
-          <div class="row-split"></div>
-          <ul>  
-            <li class="menu-item">
-              <div class="icon"  style="background:#f7d06b">
-                <i class="material-icons">airport_shuttle</i>
-              </div>
-              <div class="text">外卖专送</div>
-            </li>
-            <li class="menu-item">
-              <div class="icon"  style="background:#f3b25c">
-                <i class="material-icons">account_balance</i>
-              </div>
-              <div class="text">正餐优选</div>
-            </li>
-            <li class="menu-item">
-              <div class="icon"  style="background:#84aef9">
-                  <i class="material-icons">restaurant</i>
-              </div>
-              <div class="text">快餐小吃</div>
-            </li>
-            <li class="menu-item last">
-              <div class="icon"  style="background:#7fd1df">
-                <i class="material-icons">more</i>
-              </div>
-              <div class="text">全部商家</div>
-            </li>
-          </ul>
-        </div>
-        <v-split></v-split>
        </header>
-       <div class="seller-list">
-         <div class="title">
-              <div class="line"></div>
-              <div class="text">商家列表</div>
-              <div class="line"></div>
-         </div>
-         <div class="menu-wrapper">
-           <ul class="menu">
-             <li class="menu-item">
-               <div class="text">综合排序<i class="icon material-icons">expand_more</i></div>               
-             </li>
-             <li class="menu-item">
-               <div class="text">销量最高</div>
-             </li>
-             <li class="menu-item">
-               <div class="text">距离最近</div>
-             </li>
-             <li class="menu-item">
-               <div class="text">筛选<i class="icon material-icons">filter_list</i></div>
-             </li>
-           </ul>
-         </div>
-         <div class="seller-list-wrapper">
-           <ul>
-              <li v-for="seller in SellerList">
-                <v-seller-options  :Seller="seller"></v-seller-options>
+       <div class="contentWrapper" ref="contentWrapper">
+       <div class="content">
+          <div class="category-list">
+            <ul>
+              <li class="menu-item">
+                <div class="icon" style="background:#e97874">
+                  <i class="material-icons">room_service</i>
+                </div>
+                <div class="text">美食</div>
               </li>
-           </ul>
-         </div>
+              <li class="menu-item">
+                <div class="icon" style="background:#a1c1f9">
+                  <i class="material-icons">shopping_cart</i>
+                </div>
+                <div class="text" >美团超市</div>
+              </li>
+              <li class="menu-item">
+                <div class="icon" style="background:#a9dc6a">
+                  <i class="material-icons">spa</i>
+                </div>
+                <div class="text">生鲜果蔬</div>
+              </li>
+              <li class="menu-item">
+                <div class="icon"  style="background:#f3b25c">
+                  <i class="material-icons">free_breakfast</i>
+                </div>
+                <div class="text">下午茶</div>
+              </li>
+            </ul>
+            <div class="row-split"></div>
+            <ul>  
+              <li class="menu-item">
+                <div class="icon"  style="background:#f7d06b">
+                  <i class="material-icons">airport_shuttle</i>
+                </div>
+                <div class="text">外卖专送</div>
+              </li>
+              <li class="menu-item">
+                <div class="icon"  style="background:#f3b25c">
+                  <i class="material-icons">account_balance</i>
+                </div>
+                <div class="text">正餐优选</div>
+              </li>
+              <li class="menu-item">
+                <div class="icon"  style="background:#84aef9">
+                    <i class="material-icons">restaurant</i>
+                </div>
+                <div class="text">快餐小吃</div>
+              </li>
+              <li class="menu-item last">
+                <div class="icon"  style="background:#7fd1df">
+                  <i class="material-icons">more</i>
+                </div>
+                <div class="text">全部商家</div>
+              </li>
+            </ul>
+          </div>
+          <v-split></v-split>
+
+        <div class="seller-list">
+          <div class="title">
+                <div class="line"></div>
+                <div class="text">商家列表</div>
+                <div class="line"></div>
+          </div>
+          <div  ref="sellerFilter">
+              <v-seller-filer v-show="!filterStatus"></v-seller-filer>
+          </div>
+          <div class="seller-list-wrapper" ref="sellerListWrapper">
+            <ul>
+                <li v-for="seller in SellerList">
+                  <v-seller-options  :Seller="seller"></v-seller-options>
+                </li>
+            </ul>
+          </div>
+        </div>
+        </div>
        </div>
-       <div class="footer">
-         <div class="menu-wrapper">
-           <ul class="menu">
-             <li class="menu-item">
-               <i class="icon"></i>
-               <div class="text"></div>
-             </li>
-           </ul>
-         </div>
+       <div class="filterWarapper">
+            <v-seller-filer v-show="filterStatus"></v-seller-filer>
        </div>
    </div>
 </template>
@@ -124,49 +109,113 @@
 <script type="text/ecmascript-6">
       import split from  "@/components/split/split.vue";
       import SellerListOptions from  "@/components/SellerListOptions/SellerListOptions.vue";
+      import sellerFiler from  "@/components/sellerFiler/sellerFiler.vue";
 
-    export default{
+      import {ResponseCode,Api} from '@/common/js/constant.js';
+      import BScroll from 'better-scroll';
+      
+      export default{
       components:{
         "v-split":split,
-        "v-seller-options":SellerListOptions
+        "v-seller-options":SellerListOptions,
+        "v-seller-filer":sellerFiler
       },
       data(){
         return {
-              SellerList:[{
-                id:1,
-                name:"天于地茶餐廳",
-                sellCount:4358,
-                deliveryTime:30,
-                minPrice:20,
-                deliveryPrice:3,
-                averagePrice:28,
-                score:4.5,
-                position:1.1,
-                desc:[{
-                  type:1,
-                  text:"折扣商品5.31折起"
-                }]
-              }]
+              SellerList:[],
+              position:"滨海写字楼",
+              filterStatus:false
           }
+      },
+      mounted(){
+            this._initScroll();
+        }
+        ,
+        watch:{
+           'SellerList'(){
+               this._initScroll();
+           } 
+        },
+      created(){
+            this.showPosition();
+            this.$http.get(Api.getSellerList()).then((response) => {
+                response=response.body;
+                if (response.status===ResponseCode.OK){
+                   this.SellerList=response.data;
+                   console.log(this.SellerList);
+                }
+                this._initScroll();
+            });
+      },
+      methods:{
+            showPosition(position){ 
+              if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition((data)=>{
+                   console.log(data);
+                   let ak='kuIVexCgjaMn0TzmsnwkbFYf9Za6ERCR';
+                   let latitude=data.coords.latitude;
+                   let longitude=data.coords.longitude;
+                   let url=`http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=${latitude},${longitude}&output=json&pois=1&ak=${ak}`;
+                   console.log(url);
+                   this.$http.get(url).then((rep)=>{
+                      console.log(rep);
+                   });
+                },
+                (data)=>{
+                  console.log(data);
+                  //alert(data)
+                },{
+                  // 指示浏览器获取高精度的位置，默认为false  
+                  enableHighAcuracy: true,  
+                  // 指定获取地理位置的超时时间，默认不限时，单位为毫秒  
+                  timeout: 5000,  
+                  // 最长有效期，在重复获取地理位置时，此参数指定多久再次获取位置。  
+                  maximumAge: 3000                    
+                });
+              }else{
+                alert("Geolocation is not supported by this browser.");
+              }
+            },
+            _initScroll(){
+               this.$nextTick(()=>{
+                if(!this.contentWapperScroll){
+                  this.contentWapperScroll=new BScroll(this.$refs.contentWrapper
+                  ,{useTransition:false,click:true,probeType:3});
+
+                  let sellerFilter = this.$refs.sellerFilter;
+                  this.contentWapperScroll.on("scroll",(pos)=>{
+                      let y=pos.y//-275
+                      if(y<=-275){
+                         this.filterStatus=true;
+                      }else{
+                         this.filterStatus=false;
+                      }
+                  });
+                }else{
+                  this.contentWapperScroll.refresh();
+                }
+               });
+           }
       }
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
 
-.SellerList
+.sellerList
   width:100%
-  .header
+  >.header
+    height :91px
     .title
       display :block
       height:30px
-      font-size :24px
+      font-size :20px
       line-height :30px
       text-align:center
-    .top-wrapper
+    >.top-wrapper
       display :flex
-      margin:18px 10px 22px 10px
-      .position
+      margin:10px 10px 22px 10px
+      >.position
         flex:1
         background :#a6a6a6
         margin-right :10px
@@ -183,8 +232,8 @@
           height:27px
           margin: 0 6px
           i 
-           font-size :16px  
-           vertical-align:middle
+            font-size :16px  
+            vertical-align:middle
         .text
           display :inline-flex
           flex:1
@@ -193,7 +242,7 @@
           text-overflow :ellipsis 
           overflow :hidden
           white-space :nowrap  
-      .search
+      >.search
         flex:0 0 200px
         background :#ededed
         height :27px
@@ -202,85 +251,77 @@
         border :1px solid #ededed 
         border-radius :30px
         color :#979697
-        .icon
+        >.icon
           flex:0 0 16px
           width :16px
           height:27px
           margin: 0 6px
           i 
-           font-size :16px  
-           vertical-align:middle  
-    .menu-list  
-      display :table
-      padding : 0 19px
-      margin-bottom :15px
-      width:100%
-      box-sizing:border-box
-     .row-split
-       display :table-row    
-       height:17px 
-     ul
-      display :table-row    
-      padding-bottom:17px  
-      .menu-item
-       display :table-cell
-       width:25%
-       height :70px
-       margin-bottom :10px
-       vertical-align :top  
-       .icon
-        height :48px
-        width:48px
-        margin:0 auto
-        background :#000
-        border-radius :48px   
-        color:#fff 
-        text-align :center
-        line-height :48px
-        font-size :20px
-        i
-          line-height:46px
-       .text
-         height:22px
-         line-height :22px
-         font-size :12px;  
-         text-align :center
-  .seller-list   
-    .title
-      display :flex
-      width:50%
-      margin:10px auto 10px auto
-      height:24px
-      margin-top:6px
-      .line
-        flex :1
-        position :relative
-        top:-12px
-        border-bottom :1px solid #333333
-      .text
-        flex:0 0 100px
-        font-size :20
-        font-weight :800
-        text-align :center
-        line-height :24px
-    .menu-wrapper
-      display:table
-      width:100%
-      height:38px
-      border-bottom : 1px solid #e4e4e4
-      border-top 1px solid #e4e4e4
-      .menu
-        display :table-row
-        text-align :center
-        .menu-item
-          display :table-cell
-          width:25%
-          color:#666666
+            font-size :16px  
+            vertical-align:middle  
+  >.contentWrapper
+      position :absolute
+      overflow :hidden
+      width :100%
+      top:91px
+      bottom:48px
+    .content
+      >.category-list  
+        display :table
+        padding : 0 19px
+        margin-bottom :15px
+        width:100%
+        box-sizing:border-box
+        >.row-split
+          display :table-row    
+          height:17px 
+        ul
+          display :table-row    
+          padding-bottom:17px  
+          >.menu-item
+            display :table-cell
+            width:25%
+            height :70px
+            margin-bottom :10px
+            vertical-align :top  
+          .icon
+            height :48px
+            width:48px
+            margin:0 auto
+            background :#000
+            border-radius :48px   
+            color:#fff 
+            text-align :center
+            line-height :48px
+            font-size :20px
+            i
+              line-height:46px
           .text
-            font-size :15px
-            line-height :36px
-            .icon
-              margin-left :4px
-              vertical-align :middle
-              font-size :15px
+            height:22px
+            line-height :22px
+            font-size :12px;  
+            text-align :center
+      >.seller-list 
+        >.title
+          display :flex
+          width:50%
+          margin:10px auto 10px auto
+          height:24px
+          margin-top:6px
+          .line
+            flex :1
+            position :relative
+            top:-12px
+            border-bottom :1px solid #333333
+          .text
+            flex:0 0 100px
+            font-size :20
+            font-weight :800
+            text-align :center
+            line-height :24px
+  >.filterWarapper
+    position :fixed
+    top:88px
+    background:#fff  
+    width:100%
 </style>

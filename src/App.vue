@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="Sell_Detail" @touchstart="startBackLastPage" @touchend="endBackLastPage">
       <v-header :seller="seller"></v-header>
       <v-tab :id="seller.id"></v-tab>
       <div class="content">
@@ -32,6 +32,23 @@
                 }
             }
         },
+        methods:{
+            startBackLastPage:function(e){/*
+                console.log(e);
+                let touches=e.changeTouches;
+                if(touches.length===1){
+                    this.clientX=touches[0].clientX;
+                }*/
+            },
+            endBackLastPage:function(e){/*
+                console.log(e);
+                let touches=e.changeTouches;
+                if(touches.length===1){
+
+                }*/
+            }
+        }
+        ,
         created() {
             this.$http.get(Api.getSeller(this.seller.id)).then((response) => {
                 response=response.body;

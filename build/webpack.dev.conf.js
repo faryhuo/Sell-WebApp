@@ -18,6 +18,7 @@ const appData = require('../data.json');
 const seller = appData.seller;
 const goods = appData.goods;
 const ratings = appData.ratings;
+const sellerList = appData.sellerList;
 
 
 const devWebpackConfig = merge(baseWebpackConfig, {
@@ -47,6 +48,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       : false,
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
+    https: false,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
@@ -72,6 +74,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           data: ratings
         });
       });   
+
+      app.get('/api/sellerList', function (req, res) {
+        res.json({
+          status: 0,
+          data: sellerList
+        });
+      });   
+      
+
      }
 
   },
