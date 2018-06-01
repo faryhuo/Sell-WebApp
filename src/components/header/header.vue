@@ -5,7 +5,7 @@
        </div>
        <div class="content-wrapper">
            <div class="avatar">
-               <img :src="seller.avatar" width="64" height="64" alt="">
+               <img :src="seller.icon" width="64" height="64" alt="">
            </div>
            <div class="content">
                <div class="title">

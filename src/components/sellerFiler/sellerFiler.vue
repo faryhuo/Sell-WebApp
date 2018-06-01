@@ -1,16 +1,16 @@
 <template>
-   <div class="sellerFiler">
+   <div class="sellerFiler" >
       <ul class="menu">
-      <li class="menu-item active">
+      <li class="menu-item" :class="{active:filterOption==0}" @click="filterOption=0">
         <div class="text">综合排序<i class="icon material-icons">expand_more</i></div>               
       </li>
-      <li class="menu-item">
+      <li class="menu-item" :class="{active:filterOption==1}" @click="filterOption=1">
         <div class="text">销量最高</div>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" :class="{active:filterOption==2}"  @click="filterOption=2">
         <div class="text">距离最近</div>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" :class="{active:filterOption==3}"  @click="filterOption=3">
         <div class="text">筛选<i class="icon material-icons">filter_list</i></div>
       </li>
     </ul>      
@@ -19,6 +19,16 @@
 
 <script type="text/ecmascript-6">
     export default{
+       methods:{
+         filter:function(){
+            this.$emit('filter',this.filterOption);
+         }
+       },
+       data(){
+         return {
+           filterOption:0
+         }
+       }
     }
 </script>
 

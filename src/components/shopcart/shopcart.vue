@@ -179,7 +179,7 @@
                         this.$nextTick(()=>{
                             if(!this.scroll){
                                 this.scroll=new BScroll(this.$refs.shopcartList,{
-                                    click:true,useTransition:false
+                                    click:true,useTransition:this.GLOBAL.UseTransition
                                 });
                             }else{
                                 this.scroll.refresh();

@@ -27,7 +27,9 @@
    </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script type="text/jav-6">
+      import {ResponseCode,Api} from '@/common/js/constant.js';
+
     export default{
       data(){
         return {
@@ -38,6 +40,24 @@
           servicePhone:"101-097-77",
           startServiceTime:"9:00",
           endServiceTime:"23:00"
+        }
+      },
+      created(){
+        this.getUserInfo();
+      }
+      ,
+      methods:{
+        getUserInfo(){
+           return this.$http.get(Api.getUserInfo()).then((response) => {
+                  response=response.body;
+                  if (response.status===ResponseCode.OK){
+                      let User=response.data;
+                      if(User){
+                          this.User=User;
+                      }
+                      console.log(this.User);
+                  }
+              })
         }
       }
     }

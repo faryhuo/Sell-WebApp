@@ -22,8 +22,12 @@
           </div>
         </div>
        </header>
-       <div class="contentWrapper" ref="contentWrapper">
+       <div class="contentWrapper" ref="contentWrapper">        
        <div class="content">
+          <div  class="scroller-pullup" v-show="isPullDown">
+              <img src="./img/rolling.svg" alt="" class="image"/>
+              <span class="pull-up-msg">下拉刷新</span>
+          </div> 
           <div class="category-list">
             <ul>
               <li class="menu-item">
@@ -96,9 +100,14 @@
                   <v-seller-options  :Seller="seller"></v-seller-options>
                 </li>
             </ul>
+             <div ref="PullUp" class="scroller-pullup" v-show="isPullUp">
+                 <img src="./img/rolling.svg" alt="" class="image"/>
+                 <span class="pull-up-msg">上拉刷新</span>
+             </div>
           </div>
         </div>
         </div>
+       
        </div>
        <div class="filterWarapper">
             <v-seller-filer v-show="filterStatus"></v-seller-filer>
@@ -124,7 +133,15 @@
         return {
               SellerList:[],
               position:"滨海写字楼",
-              filterStatus:false
+              filterStatus:false,
+              isPullUp:false,
+              isPullDown:false,      
+              isReload:false,       
+              isNeedLoadData:false,
+              param:{
+                pageNum:1,
+                pageSize:10
+              }
           }
       },
       mounted(){
@@ -137,17 +154,29 @@
            } 
         },
       created(){
+            this.param.pageNum=0;
             this.showPosition();
-            this.$http.get(Api.getSellerList()).then((response) => {
-                response=response.body;
-                if (response.status===ResponseCode.OK){
-                   this.SellerList=response.data;
-                   console.log(this.SellerList);
-                }
-                this._initScroll();
-            });
+            this.getSellerList().then(this._initScroll);      
       },
       methods:{
+            getSellerList(){
+              return this.$http.get(Api.getSellerList(this.param)).then((response) => {
+                  response=response.body;
+                  if (response.status===ResponseCode.OK){
+                      let list=response.data.list;
+                      if(list && list.length){
+                          if(this.isReload){
+                             this.isReload=false;
+                             this.SellerList=[];
+                          }
+                          this.SellerList=this.SellerList.concat(list);
+                          this.param.pageNum++;
+                      }
+                      console.log(this.SellerList);
+                  }
+              });
+            },
+
             showPosition(position){ 
               if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition((data)=>{
@@ -183,6 +212,7 @@
                   ,{useTransition:false,click:true,probeType:3});
 
                   let sellerFilter = this.$refs.sellerFilter;
+
                   this.contentWapperScroll.on("scroll",(pos)=>{
                       let y=pos.y//-275
                       if(y<=-275){
@@ -190,7 +220,37 @@
                       }else{
                          this.filterStatus=false;
                       }
+                      let maxScrollY=this.contentWapperScroll.maxScrollY;
+                      if(y>=60){
+                        this.isPullDown=true;
+                      }else{
+                        if(this.isPullDown){
+                            this.isPullDown=false;
+                            this.param.pageNum=1;
+                            this.isReload=true;
+                            this.isNeedLoadData=true;
+                        }                        
+                      }
+                      if((maxScrollY-y)>=60){
+                        this.isPullUp=true;
+                      }else{
+                        if(this.isPullUp){
+                            this.isPullUp=false;
+                            this.isNeedLoadData=true;
+                        }
+                      }
                   });
+                  
+                  
+                  this.contentWapperScroll.on("scrollEnd",(pos)=>{
+                      if(this.isNeedLoadData){
+                        //load the data.
+                       this.getSellerList();
+                       this.isNeedLoadData=false;
+                      }
+                  });
+
+
                 }else{
                   this.contentWapperScroll.refresh();
                 }
@@ -319,6 +379,16 @@
             font-weight :800
             text-align :center
             line-height :24px
+      .scroller-pullup
+        width:100%
+        height:30px
+        padding:10px 0
+        text-align:center
+        .image
+          width:20px
+          height:20px
+        .pull-up-msg
+          vertical-align :middle  
   >.filterWarapper
     position :fixed
     top:88px

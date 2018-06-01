@@ -10,6 +10,7 @@ import seller from './components/seller/seller.vue'
 import homePage from './components/homePage/homePage.vue'
 import sellerList from './components/sellerList/sellerList.vue'
 import userInfo from './components/userInfo/userInfo.vue'
+import orderList from './components/orderList/orderList.vue'
 
 //stylus
 import "../node_modules/ionicons/dist/css/ionicons.css";
@@ -50,7 +51,7 @@ const routes=[
       component:sellerList
     },{
       path:'/order',
-      component:sellerList
+      component:orderList
     },{
       path:'/user',
       component:userInfo

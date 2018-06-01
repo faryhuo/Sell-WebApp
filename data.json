@@ -1,6 +1,7 @@
 {
 
-    "sellerList":[{
+    "sellerList":
+    {"list":[{
       "id":1,
       "name":"粥品香坊（回龙观）",
       "icon":"http://static.galileo.xiaojukeji.com/static/tms/seller_avatar_256px.jpg",
@@ -135,7 +136,7 @@
         "type":1,
         "text":"折扣商品5.31折起"
       }]
-    }],
+    }]},
     "seller": {
       "name": "粥品香坊（回龙观）",
       "description": "蜂鸟专送",
