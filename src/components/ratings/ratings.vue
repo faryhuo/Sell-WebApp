@@ -95,7 +95,7 @@
         ,
         methods:{
             _initScroll(){
-               this.scroll=new BScroll(this.$refs.ratings,{useTransition:false,click:true});
+               this.scroll=new BScroll(this.$refs.ratings,{useTransition:this.GLOBAL.UseTransition,click:true});
             },
             needShow(rateType,text){
                 if(this.onlyContent && !text){

@@ -92,8 +92,8 @@
                 });
             },
            _initScroll(){
-               this.menuScroll=new BScroll(this.$refs.menuWrapper,{useTransition:false,click:true});
-               this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{probeType:3,useTransition:false,click:true});
+               this.menuScroll=new BScroll(this.$refs.menuWrapper,{useTransition:this.GLOBAL.UseTransition,click:true});
+               this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{probeType:3,useTransition:this.GLOBAL.UseTransition,click:true});
 
                this.foodsScroll.on("scroll",(pos)=>{
                    this.scrollY=Math.abs(Math.round(pos.y));

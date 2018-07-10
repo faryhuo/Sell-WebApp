@@ -209,7 +209,7 @@
                this.$nextTick(()=>{
                 if(!this.contentWapperScroll){
                   this.contentWapperScroll=new BScroll(this.$refs.contentWrapper
-                  ,{useTransition:false,click:true,probeType:3});
+                  ,{useTransition:this.GLOBAL.UseTransition,click:true,probeType:3});
 
                   let sellerFilter = this.$refs.sellerFilter;
 

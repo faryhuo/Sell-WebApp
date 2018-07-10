@@ -11,16 +11,16 @@ import homePage from './components/homePage/homePage.vue'
 import sellerList from './components/sellerList/sellerList.vue'
 import userInfo from './components/userInfo/userInfo.vue'
 import orderList from './components/orderList/orderList.vue'
+import _global from "./common/js/GlobalSettting.js"
 
 //stylus
 import "../node_modules/ionicons/dist/css/ionicons.css";
 import "./common/stylus/index.styl";
 
-
 Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.use(VueResource);
-
+Vue.prototype.GLOBAL=_global;
 /* eslint-disable no-new */
 
 

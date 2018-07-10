@@ -108,7 +108,7 @@
                     this.$nextTick(()=>{
                         if(!this.picScroll){
                                 this.picScroll=new BScroll(this.$refs.picWrapper,{
-                                    useTransition:false,scrollX:true,
+                                    useTransition:this.GLOBAL.UseTransition,scrollX:true,
                                 eventPassthrough:'vertical'});
                         }else{
                             this.picScroll.refresh();
@@ -118,7 +118,7 @@
             },
             _initScroll(){
                if(!this.scroll){
-                    this.scroll=new BScroll(this.$refs.seller,{useTransition:false,click:true});
+                    this.scroll=new BScroll(this.$refs.seller,{useTransition:this.GLOBAL.UseTransition,click:true});
                }else{
                    this.scroll.refresh();
                }

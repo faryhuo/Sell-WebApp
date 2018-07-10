@@ -115,7 +115,7 @@
                this.$nextTick(()=>{
                 if(!this.orderContentScroll){
                   this.orderContentScroll=new BScroll(this.$refs.orderContent
-                  ,{useTransition:true,click:true});
+                  ,{useTransition:this.GLOBAL.UseTransition,click:true});
                 }else{
                     this.orderContentScroll.refresh();
                 }

@@ -138,7 +138,7 @@
                 this.$nextTick(()=>{
                     if(!this.scroll){
                         this.scroll=new BScroll(this.$refs.foodDetail,{
-                            click:true,useTransition:true
+                            click:true,useTransition:this.GLOBAL.UseTransition
                         });
                     }else{
                         this.scroll.refresh();
