@@ -10,7 +10,7 @@ const RatingType={
 
 const host="119.23.106.55";
 const port="8080"
-const isSimlatorMode=false;
+const isSimlatorMode=true;
 
 let Api={
    getSeller(sellerId){

@@ -393,5 +393,5 @@
     position :fixed
     top:88px
     background:#fff  
-    width:100%
+    width:100% 
 </style>
